@@ -1,5 +1,9 @@
 #!/bin/bash
 
+# github : @mohamedboukerche22
+# name : mohfetch
+
+
 # Colors
 RED="\e[31m"
 GREEN="\e[32m"
@@ -18,18 +22,72 @@ CPU="$(grep 'model name' /proc/cpuinfo | head -1 | cut -d ':' -f2 | sed 's/^ //'
 RAM="$(free -h | awk '/Mem:/ {print $3 "/" $2}')"
 
 
-logo="
-${BLUE}       /\\
+source /etc/os-release
+
+DISTRO=$ID
+
+# soon make it better 
+case "$DISTRO" in
+    ubuntu)
+        LOGO="${YELLOW}
+         _    
+     ---(_)
+ _/  ---  \\
+(_) |   |
+  \\  --- _/
+     ---   
+${RESET}"
+        ;;
+
+    arch)
+        LOGO="${CYAN}
+       /\\
       /  \\
      / /\\ \\
     / ____ \\
    /_/    \\_\\
-${RESET}
-"
+${RESET}"
+        ;;
 
-# Output
-echo -e "$logo"
+    fedora)
+        LOGO="${BLUE}
+      ____  
+     / __ \\
+    / /_/ /
+   / ____/
+  /_/     
+${RESET}"
+        ;;
 
+    debian)
+        LOGO="${RED}
+    _____
+   /  __ \\
+  |  /    |
+  |  \\___-
+   -____- 
+${RESET}"
+        ;;
+
+    alpine)
+        LOGO="${BLUE}
+      /\\ /\\
+     /  \\  \\
+    /    \\  \\
+   /      \\__\\
+${RESET}"
+        ;;
+
+    *)
+        LOGO="${WHITE}
+   Linux
+${RESET}"
+        ;;
+esac
+
+
+printf "%b\n" \
+"${LOGO}"
 echo -e "${CYAN}$USER_HOST${RESET}"
 echo -e "${BLUE}OS:${RESET}      $OS"
 echo -e "${BLUE}Kernel:${RESET}  $KERNEL"

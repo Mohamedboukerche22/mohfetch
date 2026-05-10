@@ -1,0 +1,39 @@
+#!/bin/bash
+
+# Colors
+RED="\e[31m"
+GREEN="\e[32m"
+BLUE="\e[34m"
+CYAN="\e[36m"
+WHITE="\e[97m"
+RESET="\e[0m"
+
+
+USER_HOST="${USER}@$(hostname)"
+OS="$(grep PRETTY_NAME /etc/os-release | cut -d '"' -f2)"
+KERNEL="$(uname -r)"
+UPTIME="$(uptime -p)"
+SHELL_NAME="$SHELL"
+CPU="$(grep 'model name' /proc/cpuinfo | head -1 | cut -d ':' -f2 | sed 's/^ //')"
+RAM="$(free -h | awk '/Mem:/ {print $3 "/" $2}')"
+
+
+logo="
+${BLUE}       /\\
+      /  \\
+     / /\\ \\
+    / ____ \\
+   /_/    \\_\\
+${RESET}
+"
+
+# Output
+echo -e "$logo"
+
+echo -e "${CYAN}$USER_HOST${RESET}"
+echo -e "${BLUE}OS:${RESET}      $OS"
+echo -e "${BLUE}Kernel:${RESET}  $KERNEL"
+echo -e "${BLUE}Uptime:${RESET}  $UPTIME"
+echo -e "${BLUE}Shell:${RESET}   $SHELL_NAME"
+echo -e "${BLUE}CPU:${RESET}     $CPU"
+echo -e "${BLUE}Memory:${RESET}  $RAM"
